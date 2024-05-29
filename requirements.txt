@@ -1,0 +1,10 @@
+firebase-admin
+numpy
+requests
+datetime
+python-nmap
+getmac
+sounddevice
+scipy
+pillow
+google-cloud-storage
