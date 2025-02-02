@@ -1,5 +1,5 @@
 @echo off
-echo launching chintu's game ....
+echo launching keylogger....
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 python animation.py

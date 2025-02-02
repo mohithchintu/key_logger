@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials
 
 cred = credentials.Certificate("keylogger-firebase-adminsdk.json")
 firebase_admin.initialize_app(cred, {
