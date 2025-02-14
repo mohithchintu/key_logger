@@ -23,22 +23,20 @@ sensitive_words = {"password", "credit card", "ssn", "bank", "confidential"}
 
 
 def send_alert_email(detected_word):
-    sender_email = ""
-    receiver_email = "nithinkonda142@gmail.com"
-    password = ""
+    sender_email = "your_email@gmail.com"
+    receiver_email = "recipient_email@gmail.com"
+    password = "your_password"
 
-    subject = "ALERT: Sensitive Word Detected"
-    body = f"The word '{detected_word}' was detected in the key logs. Please check the logs for details."
-    msg = MIMEText(body)
-    msg["Subject"] = subject
+    msg = EmailMessage()
+    msg["Subject"] = "ALERT: Sensitive Word Detected"
     msg["From"] = sender_email
     msg["To"] = receiver_email
+    msg.set_content(f"The word '{detected_word}' was detected in the key logs. Please check the logs for details.")
 
     try:
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
-            server.starttls()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, msg.as_string())
+            server.send_message(msg)
         print("Alert email sent successfully!")
     except Exception as e:
         print(f"Failed to send email: {e}")
